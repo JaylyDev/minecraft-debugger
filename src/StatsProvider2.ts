@@ -4,6 +4,7 @@ export interface StatData {
     name: string;
     id: string;
     full_id: string;
+    parent_name: string;
     parent_id: string;
     parent_full_id: string;
     values: number[];
@@ -41,7 +42,9 @@ export class StatsProvider2 {
             const statData: StatData = {
                 ...stat,
                 id: statId,
+                name: stat.name,
                 full_id: parent !== undefined ? parent.full_id + '_' + statId : statId,
+                parent_name: parent !== undefined ? parent.name : '',
                 parent_id: parent !== undefined ? parent.id : '',
                 parent_full_id: parent !== undefined ? parent.full_id : '',
                 values: stat.values ?? [],

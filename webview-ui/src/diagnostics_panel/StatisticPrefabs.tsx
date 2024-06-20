@@ -17,6 +17,7 @@ import {
     RegexStatisticProvider,
     SimpleStatisticProvider,
 } from './StatisticProvider';
+import MinecraftStatisticTable from './controls/MinecraftStatisticTable';
 
 interface StatisticPrefab {
     name: string;
@@ -353,3 +354,48 @@ export const entityHandleCountDiff: StatisticPrefab = {
     ),
 };
 */
+
+///
+// Debug
+///
+export const packetsReceivedTable: StatisticPrefab = {
+    name: 'Packets Recieved',
+    reactNode: (
+        <MinecraftStatisticTable
+            title="Packets Received"
+            yLabel="Number Of Packets"
+            statisticColumns={[
+                {
+                    label: 'Packets Received',
+                    statisticDataProvider: new RegexStatisticProvider({
+                        statisticParentId: /networking_packets_details_.*/,
+                        statisticId: 'received',
+                        ignoredValues: [0],
+                    }),
+                    statisticResolver: ParentNameStatResolver(
+                        createStatResolver({
+                            type: StatisticType.Absolute,
+                            tickRange: 20 * 45 /* About 45 seconds */,
+                            yAxisType: YAxisType.Absolute,
+                        })
+                    ),
+                },
+                {
+                    label: 'Packets Sent',
+                    statisticDataProvider: new RegexStatisticProvider({
+                        statisticParentId: /networking_packets_details_.*/,
+                        statisticId: 'sent',
+                        ignoredValues: [0],
+                    }),
+                    statisticResolver: ParentNameStatResolver(
+                        createStatResolver({
+                            type: StatisticType.Absolute,
+                            tickRange: 20 * 45 /* About 45 seconds */,
+                            yAxisType: YAxisType.Absolute,
+                        })
+                    ),
+                },
+            ]}
+        />
+    ),
+};

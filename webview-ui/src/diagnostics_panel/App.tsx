@@ -33,6 +33,7 @@ function App() {
                 <VSCodePanelTab id="tab-4">Networking - Packets</VSCodePanelTab>
                 <VSCodePanelTab id="tab-5">Networking - Bandwidth</VSCodePanelTab>
                 <VSCodePanelTab id="tab-6">Handle Counts</VSCodePanelTab>
+                <VSCodePanelTab id="tab-7">Debug</VSCodePanelTab>
                 <VSCodePanelView id="view-1" style={{ flexDirection: 'column' }}>
                     <div style={{ flexDirection: 'row', display: 'flex' }}>
                         {statPrefabs.entityCount.reactNode}
@@ -103,6 +104,7 @@ function App() {
                         }}
                     />
                 </VSCodePanelView>
+                <VSCodePanelView id="view-7">{statPrefabs.packetsReceivedTable.reactNode}</VSCodePanelView>
             </VSCodePanels>
         </main>
     );

@@ -44,7 +44,7 @@ function AbsoluteStatResolver(
             }
 
             const tickOffset = msg.values.length - i - 1;
-            result.push({ value: value, time: msg.time - tickOffset, absoluteValue: value, category: msg.id });
+            result.push({ value: value, time: msg.time - tickOffset, absoluteValue: value, category: msg.name });
         }
 
         // Sort oldest to newest
@@ -58,6 +58,8 @@ function AbsoluteStatResolver(
         return result;
     };
 }
+
+JSON.parse;
 
 // Generates a list of stats that match the aboslute value of the stat
 function DifferenceStatResolver(
@@ -85,7 +87,7 @@ function DifferenceStatResolver(
                 value: newValue,
                 time: msg.time - tickOffset,
                 absoluteValue: absoluteValue,
-                category: msg.id,
+                category: msg.name,
             });
         }
 
@@ -107,6 +109,7 @@ export function NestedStatResolver(
 ): (statUpdate: StatisticUpdatedMessage, previousValues: TrackedStat[]) => TrackedStat[] {
     return (msg: StatisticUpdatedMessage, previousValues: TrackedStat[]): TrackedStat[] => {
         msg.id = `${msg.group} - ${msg.id}`;
+        msg.name = `${msg.group_name} - ${msg.name}`;
         return resolver(msg, previousValues);
     };
 }
@@ -117,6 +120,7 @@ export function ParentNameStatResolver(
 ): (statUpdate: StatisticUpdatedMessage, previousValues: TrackedStat[]) => TrackedStat[] {
     return (msg: StatisticUpdatedMessage, previousValues: TrackedStat[]): TrackedStat[] => {
         msg.id = msg.group;
+        msg.name = msg.group_name;
         return resolver(msg, previousValues);
     };
 }
